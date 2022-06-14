@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import socket
 
 
@@ -12,7 +13,7 @@ PORT =  12345
 DISCONNECT_MESSAGE = "!Disconnect"
 
 # Different SERVER...
-SERVER = '10.248.193.223'
+SERVER = '192.168.220.143'
 
 ADDR = (SERVER, PORT)
 
