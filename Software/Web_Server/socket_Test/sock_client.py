@@ -9,7 +9,7 @@ PORT =  12345
 DISCONNECT_MESSAGE = "!Disconnect"
 
 # Different SERVER...
-SERVER = '192.168.86.150'
+SERVER = '10.248.193.223'
 
 ADDR = (SERVER, PORT)
 
