@@ -1,7 +1,8 @@
 import socket
 import threading
 
-
+# REFERENCES
+# https://www.geeksforgeeks.org/python-program-that-sends-and-recieves-message-from-client/
 
 HEADER =  64 # bytes
 
@@ -52,15 +53,15 @@ def handle_client(conn,addr):
         ## since when we connect we don't get a valid message its basically blank
 
         if msg_length:
-        
             # string to int..
             msg_length = int(msg_length)
             # now determine the number of byts we are recieveing for the actual message
             msg= conn.recv(HEADER).decode(FORMAT)
-            print(f"[{addr}]{msg}")
-            if msg == DISCONNECT_MESSAGE:
-                connected = False
             
+            if msg == DISCONNECT_MESSAGE:
+                print(f"[{addr}]{msg}")
+                connected = False
+            print(f"[{addr}]{msg}")
     conn.close()
 
 
