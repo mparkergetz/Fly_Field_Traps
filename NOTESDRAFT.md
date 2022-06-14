@@ -27,9 +27,11 @@
 
 
 ## File Transfer IDEAS:
-
+#### Just need to get the most recent file...
+#### 
 * Rsync
     * Use this for over SSH  to transfer files to computer automatically. (Image from Pi -> Laptop/Desktop)
+
 
 * Mount/Unmount:
     * This could basically make a certain directory accessible and then can then unmount it from the network when done...
