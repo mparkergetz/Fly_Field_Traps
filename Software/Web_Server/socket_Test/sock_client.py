@@ -8,7 +8,7 @@ HEADER =  64 # bytes
 # Set arbritrary port number
 ## will need to be different if on pi...
 ## SAME AS IN SERVER>>>
-PORT =  8080
+PORT = 8080
 
 DISCONNECT_MESSAGE = "!Disconnect"
 

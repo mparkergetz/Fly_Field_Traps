@@ -9,7 +9,7 @@ HEADER =  64 # bytes
 
 # Set arbritrary port number
 ## will need to be different if on pi...
-PORT =  12345 
+PORT = 8080
 #socket.getaddrinfo('localhost', 8080)
 # Server by the IP Address of device hosting
 SERVER = socket.gethostbyname(socket.gethostname())
