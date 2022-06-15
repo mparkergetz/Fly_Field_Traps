@@ -7,13 +7,21 @@ HEADER =  64 # bytes
 
 # Set arbritrary port number
 ## will need to be different if on pi...
-## SAME AS IN SERVER>>>
-PORT = 8080
+## PI HUB PORT
+### Using PiHub works as the server....
+### CAn try toi use VNC viewer or SSH to utilize the pi..
+PORT = 5050
+
+## OTHER PORT? 
+#PORT = 22
 
 DISCONNECT_MESSAGE = "!Disconnect"
 
-# Different SERVER...
-SERVER = '127.0.1.1'
+# Hub Pi Server:
+SERVER = '192.168.220.1'
+
+#Laptop Server
+#SERVER = '192.168.220.98'
 
 ADDR = (SERVER, PORT)
 
