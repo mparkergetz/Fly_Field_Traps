@@ -5,6 +5,7 @@
 ## Connect to the network created by the Hub pi
 import socket
 import threading
+import time
 time.sleep(60)
 HEADER =  64 # bytes
 
