@@ -9,16 +9,16 @@ HEADER =  64 # bytes
 
 # Set arbritrary port number
 ## will need to be different if on pi...
-PORT = 22
+PORT = 5050
 #socket.getaddrinfo('localhost', 8080)
 # Server by the IP Address of device hosting
 #SERVER = socket.gethostbyname(socket.gethostname())
 
 # SERVER FOR PI HUB
-SERVER = '192.168.220.1'
+#SERVER = '192.168.220.1'
 
 #SERVER FOR THE UBUNTU MACHINE
-#SERVER = '192.168.220.98'
+SERVER = '192.168.220.91'
 #print(SERVER)
 # ADDR: address that we will use to bind to the socket
 ADDR = (SERVER, PORT)
