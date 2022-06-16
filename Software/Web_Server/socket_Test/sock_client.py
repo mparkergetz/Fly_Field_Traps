@@ -4,6 +4,8 @@
 ## VNC ON
 ## Connect to the network created by the Hub pi
 import socket
+import threading
+time.sleep(60)
 HEADER =  64 # bytes
 
 # Set arbritrary port number
