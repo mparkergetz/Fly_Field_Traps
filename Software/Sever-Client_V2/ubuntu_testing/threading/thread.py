@@ -25,6 +25,7 @@ Concurrently for when they will start with only a slight delay in between
 """
 
 import threading
+import concurrent.futures
 import time
 
 # start time..
@@ -34,6 +35,9 @@ def do_something():
 	print('Sleeping 1 second')
 	time.sleep(1)
 	print('Done Sleeping..')
+
+with concurrent.futures.ThreadPoolExecutor() as executor:
+	f1 =  executor.submit(do_something, 1)
 
 do_something()
 do_something()
