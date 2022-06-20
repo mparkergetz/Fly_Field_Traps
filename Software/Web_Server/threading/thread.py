@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# THREADING TESTING 
+# THREADING TESTING on UBUNTU....
 """
 
 This script will test out the functionality of threading
@@ -9,6 +9,18 @@ Will simulate 6 different pis... then will move up to 10
 
 
 Will be running CONCURRENTLY....
+
+THREADING IS APPROPRIATE FOR COMMUNICATION BETWEEN DEVICES...
+ THIS WAY A THREAD CAN HAVE THE IP ADDRESSED SAVED SO A SPECIFCA THREAD CAN BE ACCESSED
+ 
+ 
+ADDITIONALLY ALL OF THE THREADS CAN BE RUN 
+Concurrently for when they will start with only a slight delay in between
+
+
+
+..
+
 
 """
 
