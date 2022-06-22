@@ -3,8 +3,6 @@
 import base64
 import sys
 
-
-
 with open ("fly.jpg", "rb") as image2string:
 	converted_string = base64.b64encode(image2string.read())
 

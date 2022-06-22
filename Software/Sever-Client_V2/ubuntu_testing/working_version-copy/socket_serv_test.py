@@ -3,7 +3,7 @@
 import socket
 import threading
 import numpy as np
-
+import base64
 
 """
 It is important to note the the user will not be able to automatically start everything and that
@@ -184,10 +184,22 @@ def thread_manager(connection, Address):
         print("NEED INPUT....")
         test = int(input())
         if test == 1:
-            connection.send(bytes("Bye", FORMAT))
+            connection.send(bytes("Single Image", FORMAT))
+            print("Recieving Image from Client..")
+            # Will first recieve the length:
+            #data = connection.recv(1024)
+            data = connection.recv(235328)
+            print("Message:")
+            print(data)
+            print("Convert The Message to Image")
+            new_image = open("WOW2.jpg", 'wb')
+            new_image.write(base64.b64decode((data)))
+            new_image.close
             # single_image(connection)
         elif test == 2:
             print("MEh")
+
+        # NEED TO BASICALLY CLOSE THE CONNECTION...
     # print(CLIENTS)
     # for client in CLIENTS:
     #     print(client)

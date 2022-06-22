@@ -16,9 +16,11 @@ Pickle?
 ## ssh On
 ## VNC ON
 ## Connect to the network created by the Hub pi
+from lib2to3.pytree import convert
 import socket
 import threading
 import time
+import base64
 # 60 seconds for pi
 #time.sleep(60)
 
@@ -86,3 +88,15 @@ data = client.recv(1024)
 print("Decoding...")
 msg = data.decode(FORMAT)
 print(f"Data: {msg}")
+
+# Now determine whether or not the message will perform the experiment or it will send an image
+## In this case the image is a preset one
+if msg == "Single Image":
+    with open ("fly.jpg", "rb") as image2string:
+        converted_string = base64.b64encode(image2string.read())
+        print(converted_string)
+        print(len(converted_string))
+        client.send(converted_string)
+
+
+
