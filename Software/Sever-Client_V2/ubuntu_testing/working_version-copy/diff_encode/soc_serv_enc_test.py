@@ -6,6 +6,7 @@ from tkinter import Image
 import numpy as np
 import base64
 import time
+import codecs
 """
 
 
@@ -216,38 +217,68 @@ def thread_manager(connection, Address):
             connection.send(bytes("Single Image", FORMAT))
             print("Recieving Image from Client..")
             # Will first recieve the length:
-            length = connection.recv(64)
-            str_len_img = str(length, FORMAT)
+            # length = connection.recv(64)
+            # print(type(length))
+            #print(codecs.decode(length))
+            # str_len_img = len(length)
+            # print(str_len_img)
             #data = connection.recv(235328)
-            print(f"Length:{str_len_img}")
-            if length:
-                with open("windtunnel_new.jpg", 'wb') as flyimg:
-                    print("Recieve the Binary Image")
-                    #image = connection.recv(4096)
-                    print("Convert The Message to Image")
-                    current_length = 0
-                    while True:
-                        #image
-                        image = connection.recv(64)
-                        #print(f"Length of Recieved Bytes {len(image)}")
-                        current_length+=len(str(image,FORMAT))
-                        print(current_length)
+            # print(f"Length:{str_len_img}")
+            # if str_len_img:
+            flyimg = open("4kelephant2.jpg_new.jpg", 'wb')
+            print("Recieve the Binary Image")
+            #image = connection.recv(4096)
+            print("Convert The Message to Image")
+            current_length = 0
+            # initialized bytes recieved as none..
+            ## through the while loop with will be increased...
+            ## The data from the recieve will be added to this variable
+            bytes_recieved = None
+            # Length of bytes...
+            length_recieved = 0
+            # The bytes recieved length will be examined continuously...
+            while True:
+                #while connection.recv(64):
+                #new data from the connection with the image...
+                image = connection.recv(1024)
+                #print(f"Length of Recieved Bytes {len(image)}")
+                length_recieved=len(image)
+                print(f"Length of Recieved Bytes {length_recieved}")
+
+                ## Added to the bytes recieved:
+                bytes_recieved=image
+                if image:
+                    # IF BYTES HAVE BEEN RECIEVED THEN...
+                    while image:
+                        image = connection.recv(1024)
+                        length_recieved+=len(image)
+                        print(f"Length of Recieved Bytes {length_recieved}")
+                        bytes_recieved+=image
+                    else:
+                        print(f"Final Length:{length_recieved}")
+                        break
+                            
+                        #current_length+=len(str(image,FORMAT))
                         #with open ("WOW2.jpg", "rb") as image2string:
                         #base64_encoded_data = base64.b64encode(image)
                         #str_data = base64_encoded_data.decode(FORMAT)
                         #string = str(binary_data, FORMAT)
                         #str_len_bytes = len(str_data)
-                        if current_length < int(str_len_img):
-                            flyimg.write(base64.b64decode((image)))
-                             
-                        elif current_length >= int(str_len_img):
-                            #flyimg.close
-                            break
+                        # if current_length < int(str_len_img):
+                        #     # If the length of the bytes is less than the 
+                        #     ## Known length it should be...
+                        #     ## then it is known that we will needto 
+                        #     continue
+                        # elif current_length >= int(str_len_img):
+                        #     #flyimg.close
+                        #     break
                     # Ending with the null byte to signify the end of the file
                     ## Wrote this to the file in order to finalize this...
-                    #flyimg.write(b'\x00') 
-                end = time.perf_counter_ns()
-                print(f"Time for Single Image: {end-start} ns")
+                    #flyimg.write(b'\x00')
+            flyimg.write(bytes_recieved)
+            flyimg.close()
+            end = time.perf_counter_ns()
+            print(f"Time for Single Image: {end-start} ns")
                     #flyimg.close
                # new_image.close
             # single_image(connection)

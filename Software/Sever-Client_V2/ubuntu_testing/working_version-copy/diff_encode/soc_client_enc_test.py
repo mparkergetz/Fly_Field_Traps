@@ -21,6 +21,8 @@ import socket
 import threading
 import time
 import base64
+import os
+import codecs
 # 60 seconds for pi
 #time.sleep(60)
 
@@ -105,40 +107,65 @@ if msg == "Single Image":
     4. https://pillow.readthedocs.io/en/stable/reference/Image.html
     5. 
 
+    USEING THIS>>>>
+
+    https://www.codegrepper.com/code-examples/python/python+send+image+server
+
+
+
     """
+    filename = "4kelephant.jpg"
+    img = open (filename,"rb")
+    size = os.path.getsize(filename)
+    #print(type(size))
+    bytes_send = img.read(size)
+    #print(type(bytes_send))
+    byte_length = str(size)
+    #byte_len_check = len(str(bytes_send, FORMAT))
 
+    # Send the length of the byte string,.
+    #client.send(bytes(byte_length,FORMAT))
 
+    # First Send the image bytes once and these will be converted into a length by the server
+    #client.sendall(bytes_send)
+    ## Check The Lengths:
+    print(f"bytes size:{byte_length}|| bytes check: {len(bytes_send)}")
+    # if byte_length==len(bytes_send):
+        # Then will send all of the image bytes...
+    client.sendall(bytes_send)
+    # CORRECT SIZE BYTES HAVE BEEN SENT!!!
+    img.close()
+    print("IMG SENT!")
+#     with open ("windtunnel.jpg","rb") as image2string:
+#         binary_data = image2string.read()
+#         print(f"Binary data:{binary_data}")
+#         base64_encoded_data = base64.b64encode(binary_data)
+#         base64_decoded_data = base64.b64decode(base64_encoded_data)
+#         #str_data = base64_encoded_data.decode(FORMAT)
+#         #print(str_data)
+#         #print(type(base64_encoded_data))
+#         #base64_message = base64_encoded_data.encode(FORMAT)
+#         #base64_message = base64_encoded_data.decode('utf-8')
+#         # converted_string = base64.b64encode(image2string.read())
+#         #print(base64_message)
+#         #base64_msg= converted_string.decode('utf-8')
+#         #message_bytes = base64.b64decode(base64_bytes)
+#         #print(base64_encoded_data)
+#         #print(len(str_data))
+#         length = str(len(str_data))
+#         # Send the length of the binary string
+#         client.send(length.encode(FORMAT))
 
-
-    with open ("windtunnel.jpg", "rb") as image2string:
-        binary_data = image2string.read()
-        
-        base64_encoded_data = base64.b64encode(binary_data)
-        
-        str_data = base64_encoded_data.decode(FORMAT)
-        #print(str_data)
-        #print(type(base64_encoded_data))
-        #base64_message = base64_encoded_data.encode(FORMAT)
-        #base64_message = base64_encoded_data.decode('utf-8')
-        # converted_string = base64.b64encode(image2string.read())
-        #print(base64_message)
-        #base64_msg= converted_string.decode('utf-8')
-        #message_bytes = base64.b64decode(base64_bytes)
-        #print(base64_encoded_data)
-        #print(len(str_data))
-        length = str(len(str_data))
-        # Send the length of the binary string
-        client.send(length.encode(FORMAT))
-
-        bytes_sent = 0
-        print(len(binary_data))
-        while bytes_sent < int(length):
-            bytes_sent += client.send(bytes(str_data, FORMAT))
-            print(f"Bytes Sent: {bytes_sent} || Length: {int(length)}")
-            # if bytes_sent > int(length):
-            #     break
-        print("I AM FREE")
-# USE SCP... Then we can then use python to basically take this..
-## Secure Copy with Python...using this with the Target IP Address and the Target Directory
-##
+#         bytes_sent = 0
+#         print(len(binary_data))
+#         print(len(base64_encoded_data))
+#         while bytes_sent < int(length):
+#             bytes_sent += client.send(bytes(str_data, FORMAT))
+#             print(f"Bytes Sent: {bytes_sent} || Length: {int(length)}")
+#             # if bytes_sent > int(length):
+#             #     break
+#         print("I AM FREE")
+# # USE SCP... Then we can then use python to basically take this..
+# ## Secure Copy with Python...using this with the Target IP Address and the Target Directory
+# ##
 
