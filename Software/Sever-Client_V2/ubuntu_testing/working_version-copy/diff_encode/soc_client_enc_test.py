@@ -96,6 +96,20 @@ print(f"Data: {msg}")
 
 ## https://stackabuse.com/encoding-and-decoding-base64-strings-in-python/
 if msg == "Single Image":
+    """
+    ENCODING ISSUE IS IN HERE.... NEED TO USE DIFF METHODS:
+
+    1. https://www.adamsmith.haus/python/answers/how-to-convert-an-image-to-a-string-in-python
+    2. https://jdhao.github.io/2019/07/06/python_opencv_pil_image_to_bytes/
+    3. https://www.geeksforgeeks.org/python-pil-tobytes-method/
+    4. https://pillow.readthedocs.io/en/stable/reference/Image.html
+    5. 
+
+    """
+
+
+
+
     with open ("windtunnel.jpg", "rb") as image2string:
         binary_data = image2string.read()
         
