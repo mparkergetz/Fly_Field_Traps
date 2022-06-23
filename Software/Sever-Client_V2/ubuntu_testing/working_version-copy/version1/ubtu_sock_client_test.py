@@ -47,10 +47,12 @@ DISCONNECT_MESSAGE = "!Disconnect"
 #SERVER = '192.168.220.1'
 
 #Laptop Server PIAP
-# SERVER = '192.168.220.91'
+#SERVER = '192.168.220.91'
 
 #SERVER FOR UBUNTU MACHINE (LOGAN's HOME)
 SERVER = '192.168.86.129'
+# SERVER FOR UBUNTU MACHINE (LOGAN'S LAPTOP ON PIAP)
+#SERVER = '192.168.220.60'
 ADDR = (SERVER, PORT)
 
 FORMAT = 'utf-8'
@@ -91,12 +93,39 @@ print(f"Data: {msg}")
 
 # Now determine whether or not the message will perform the experiment or it will send an image
 ## In this case the image is a preset one
+
+## https://stackabuse.com/encoding-and-decoding-base64-strings-in-python/
 if msg == "Single Image":
-    with open ("fly.jpg", "rb") as image2string:
-        converted_string = base64.b64encode(image2string.read())
-        print(converted_string)
-        print(len(converted_string))
-        client.send(converted_string)
+    with open ("windtunnel.jpg", "rb") as image2string:
+        binary_data = image2string.read()
+        
+        base64_encoded_data = base64.b64encode(binary_data)
+        
+        str_data = base64_encoded_data.decode(FORMAT)
+        #print(str_data)
+        #print(type(base64_encoded_data))
+        #base64_message = base64_encoded_data.encode(FORMAT)
+        #base64_message = base64_encoded_data.decode('utf-8')
+        # converted_string = base64.b64encode(image2string.read())
+        #print(base64_message)
+        #base64_msg= converted_string.decode('utf-8')
+        #message_bytes = base64.b64decode(base64_bytes)
+        #print(base64_encoded_data)
+        #print(len(str_data))
+        length = str(len(str_data))
+        # Send the length of the binary string
+        client.send(length.encode(FORMAT))
 
-
+        bytes_sent = 0
+        print(len(binary_data))
+        print(len(base64_encoded_data))
+        while bytes_sent < int(length):
+            bytes_sent += client.send(bytes(str_data, FORMAT))
+            print(f"Bytes Sent: {bytes_sent} || Length: {int(length)}")
+            # if bytes_sent > int(length):
+            #     break
+        print("I AM FREE")
+# USE SCP... Then we can then use python to basically take this..
+## Secure Copy with Python...using this with the Target IP Address and the Target Directory
+##
 

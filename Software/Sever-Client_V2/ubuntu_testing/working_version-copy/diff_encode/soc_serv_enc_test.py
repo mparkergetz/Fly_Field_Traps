@@ -2,10 +2,13 @@
 # 6/15/2022 USE THIS VERSION!
 import socket
 import threading
+from tkinter import Image
 import numpy as np
 import base64
-
+import time
 """
+
+
 It is important to note the the user will not be able to automatically start everything and that
 the user will have to manually parse through each of the pi devices for additional checks and in order to start the time
 * TRY TO CHANGE LATER... (MAKE SO THAT CAN DO ONE COMMAND TO SEND OUT ALL OF THE THREADS...)
@@ -22,6 +25,25 @@ Functions:
     Start Time of the experiment will be sent to all of the clients..
 4. Finally the main_function is used in order to group the threading functions and run them as needed..
 5. Disconnection Function <- IN main_function?
+
+
+6/22/22 NOTES:
+
+SCP TEST THIS OUT... Th
+
+AT ANY TIME... USER NEEDS TO KNOW FRAMS PER SECOND...-> 
+
+USER NEEDS TO BE ABLE TO SEE LIVE IMAGE ON THE FEED... ??? 
+SO THEN WE WOULD NEED TO BE ABLE TO GO INTO A PI DEVICE AND THEN CHECK TO SEE HOW
+THE AQUISITION IS GOING..
+
+BEFORE STARTING THE CONNECTIONS... THE SERVER NEEDS TO START THEN AFTER ALL THE CLIENTS HAVE STARTED THEN
+WILL HAVE THE SERVER SEARCH FOR CONNECTIONS....
+
+NEED TO IMPLEMENT THE GPS FUNCTIONALITY...AND SAVE THE GPS to a TXT file and
+only save this at the start...
+
+
 """
 
 
@@ -46,6 +68,10 @@ PORT = 5050
 
 #SERVER FOR UBUNTU MACHINE (LOGAN's HOME)
 SERVER = '192.168.86.129'
+
+# SERVER FOR UBUNTU MACHINE (LOGAN'S LAPTOP ON PIAP)
+#SERVER = '192.168.220.60'
+
 #print(SERVER)
 # ADDR: address that we will use to bind to the socket
 ADDR = (SERVER, PORT)
@@ -147,6 +173,8 @@ def single_image(connection):
     Then the server is going to look for this...
     """
     connection.send(b'Send Single Image')
+    # Have image save to particular directory per the experiment type...
+
 
 # Second Threading Function: Run Experiment
 ##
@@ -184,17 +212,44 @@ def thread_manager(connection, Address):
         print("NEED INPUT....")
         test = int(input())
         if test == 1:
+            start = time.perf_counter_ns()
             connection.send(bytes("Single Image", FORMAT))
             print("Recieving Image from Client..")
             # Will first recieve the length:
-            #data = connection.recv(1024)
-            data = connection.recv(235328)
-            print("Message:")
-            print(data)
-            print("Convert The Message to Image")
-            new_image = open("WOW2.jpg", 'wb')
-            new_image.write(base64.b64decode((data)))
-            new_image.close
+            length = connection.recv(64)
+            str_len_img = str(length, FORMAT)
+            #data = connection.recv(235328)
+            print(f"Length:{str_len_img}")
+            if length:
+                with open("windtunnel_new.jpg", 'wb') as flyimg:
+                    print("Recieve the Binary Image")
+                    #image = connection.recv(4096)
+                    print("Convert The Message to Image")
+                    current_length = 0
+                    while True:
+                        #image
+                        image = connection.recv(64)
+                        #print(f"Length of Recieved Bytes {len(image)}")
+                        current_length+=len(str(image,FORMAT))
+                        print(current_length)
+                        #with open ("WOW2.jpg", "rb") as image2string:
+                        #base64_encoded_data = base64.b64encode(image)
+                        #str_data = base64_encoded_data.decode(FORMAT)
+                        #string = str(binary_data, FORMAT)
+                        #str_len_bytes = len(str_data)
+                        if current_length < int(str_len_img):
+                            flyimg.write(base64.b64decode((image)))
+                             
+                        elif current_length >= int(str_len_img):
+                            #flyimg.close
+                            break
+                    # Ending with the null byte to signify the end of the file
+                    ## Wrote this to the file in order to finalize this...
+                    #flyimg.write(b'\x00') 
+                end = time.perf_counter_ns()
+                print(f"Time for Single Image: {end-start} ns")
+                    #flyimg.close
+               # new_image.close
             # single_image(connection)
         elif test == 2:
             print("MEh")
