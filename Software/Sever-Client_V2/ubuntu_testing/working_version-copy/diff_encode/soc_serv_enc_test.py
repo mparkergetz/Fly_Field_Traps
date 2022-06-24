@@ -44,6 +44,12 @@ WILL HAVE THE SERVER SEARCH FOR CONNECTIONS....
 NEED TO IMPLEMENT THE GPS FUNCTIONALITY...AND SAVE THE GPS to a TXT file and
 only save this at the start...
 
+6/23/22
+
+Client to Server Sending of Image via bytes seems to work very well
+
+NEED TO MAKE A DICTIONARY OF CLIENT CONN AND ADDR...
+-> SO THEN THIS WAY WE CAN EFFICIENTLY GO BACK AND ISSUE COMMANDS AFTER FIRST CONNECTING TO ALL THE CLIENTS..
 
 """
 
@@ -65,10 +71,10 @@ PORT = 5050
 
 #SERVER FOR THE UBUNTU MACHINE (PIAP)
 ## This Stays Constant
-#SERVER = '192.168.220.91'
+SERVER = '192.168.220.91'
 
 #SERVER FOR UBUNTU MACHINE (LOGAN's HOME)
-SERVER = '192.168.86.129'
+#SERVER = '192.168.86.129'
 
 # SERVER FOR UBUNTU MACHINE (LOGAN'S LAPTOP ON PIAP)
 #SERVER = '192.168.220.60'
@@ -225,7 +231,7 @@ def thread_manager(connection, Address):
             #data = connection.recv(235328)
             # print(f"Length:{str_len_img}")
             # if str_len_img:
-            flyimg = open("4kelephant2.jpg_new.jpg", 'wb')
+            flyimg = open("4kelephant2_new.jpg", 'wb')
             print("Recieve the Binary Image")
             #image = connection.recv(4096)
             print("Convert The Message to Image")
@@ -279,6 +285,16 @@ def thread_manager(connection, Address):
             flyimg.close()
             end = time.perf_counter_ns()
             print(f"Time for Single Image: {end-start} ns")
+            break
+            ## NOW IF WE WANT TO BREAK OUT OF HERE USER NEEDS TO TYPE
+            ## BREAK
+            # usr_status = input()
+            # if usr_status == 'BREAK':
+            #     break
+            # else:
+            #     continue
+
+
                     #flyimg.close
                # new_image.close
             # single_image(connection)
@@ -303,14 +319,15 @@ def listener_single():
     print("Listening...")
     server.listen()
     # The conn and addr for the client in question
-    print("In Loop")
-    conn, addr =  server.accept()
-    print("listening...")
-    #conn.send(bytes("Bye", FORMAT))
-    thread =  threading.Thread(target=thread_manager, args=[conn, addr])
-    thread.start()
-    thread.join
-    print(f"Client {conn,addr}")
+    while True:
+        print("In Loop")
+        conn, addr =  server.accept()
+        print("listening...")
+        #conn.send(bytes("Bye", FORMAT))
+        thread =  threading.Thread(target=thread_manager, args=[conn, addr])
+        thread.start()
+        thread.join
+        print(f"Client {conn,addr}")
 
     #     thread =  threading.Thread(target=handle_client, args=(conn,addr))
     #     print(thread)
@@ -365,8 +382,6 @@ def listener_single():
     # for thread in total_clients:
     #     thread.start()
     #     thread.join()
-
-
 
     # server.listen()
     # print("Server is listening on {SERVER} for new connections")
