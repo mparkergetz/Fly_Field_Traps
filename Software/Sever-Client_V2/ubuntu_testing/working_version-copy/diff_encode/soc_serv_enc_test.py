@@ -246,19 +246,19 @@ def thread_manager(connection, Address):
             while True:
                 #while connection.recv(64):
                 #new data from the connection with the image...
-                image = connection.recv(1024)
+                image = connection.recv(4096)
                 #print(f"Length of Recieved Bytes {len(image)}")
                 length_recieved=len(image)
-                print(f"Length of Recieved Bytes {length_recieved}")
+                #print(f"Length of Recieved Bytes {length_recieved}")
 
                 ## Added to the bytes recieved:
                 bytes_recieved=image
                 if image:
                     # IF BYTES HAVE BEEN RECIEVED THEN...
                     while image:
-                        image = connection.recv(1024)
+                        image = connection.recv(4096)
                         length_recieved+=len(image)
-                        print(f"Length of Recieved Bytes {length_recieved}")
+                        #print(f"Length of Recieved Bytes {length_recieved}")
                         bytes_recieved+=image
                     else:
                         print(f"Final Length:{length_recieved}")
