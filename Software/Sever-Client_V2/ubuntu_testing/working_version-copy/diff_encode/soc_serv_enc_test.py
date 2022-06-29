@@ -231,7 +231,7 @@ def thread_manager(connection, Address):
             #data = connection.recv(235328)
             # print(f"Length:{str_len_img}")
             # if str_len_img:
-            flyimg = open("4kelephant2_new.jpg", 'wb')
+            flyimg = open("img_field.jpg", 'wb')
             print("Recieve the Binary Image")
             #image = connection.recv(4096)
             print("Convert The Message to Image")
@@ -285,7 +285,11 @@ def thread_manager(connection, Address):
             flyimg.close()
             end = time.perf_counter_ns()
             print(f"Time for Single Image: {end-start} ns")
-            break
+
+            # Send a message that lets the pi know that we got the image
+            #print("Input (1) to Image again or (2) to Stop")
+            #test = int(input())
+            #break
             ## NOW IF WE WANT TO BREAK OUT OF HERE USER NEEDS TO TYPE
             ## BREAK
             # usr_status = input()
@@ -298,9 +302,10 @@ def thread_manager(connection, Address):
                     #flyimg.close
                # new_image.close
             # single_image(connection)
-        elif test == 2:
-            print("MEh")
-
+        #elif test == 2:
+            #connection.send(bytes("Stop", FORMAT))
+            #print("Stopping Client")
+            #break
         # NEED TO BASICALLY CLOSE THE CONNECTION...
     # print(CLIENTS)
     # for client in CLIENTS:
