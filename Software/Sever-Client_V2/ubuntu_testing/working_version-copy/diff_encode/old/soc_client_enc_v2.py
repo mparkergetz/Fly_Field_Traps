@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# FOR UBUNTU
+# FOR UBUNTU include the above line...
 """
 This works in essentially creating a client that will 
 1. Send a Message that it has connected
@@ -7,9 +7,6 @@ This works in essentially creating a client that will
 
 It does this in a way through encoding the strings so they can be properly 
 sent...
-
-Pickle?
--> Use pickle for frame to byte data,,,
 
 """
 ## Serial on
@@ -24,10 +21,7 @@ import base64
 import os
 import codecs
 # 60 seconds for pi
-#time.sleep(60)
-
-# 15 seconds for ubuntu machine testing
-time.sleep(15)
+time.sleep(60)
 HEADER =  64 # bytes
 
 # Set arbritrary port number
@@ -35,9 +29,6 @@ HEADER =  64 # bytes
 ## PI HUB PORT
 ### Using PiHub works as the server....
 ### CAn try toi use VNC viewer or SSH to utilize the pi..
-
-## OTHER PORT? 
-#PORT = 22
 
 ## Port for the Ubuntu Machine
 PORT = 5050
