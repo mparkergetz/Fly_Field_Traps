@@ -34,18 +34,20 @@ exp_start = (current_time + tdelta).strftime("%Y%m%d_%H%M%S")
 duration_hr = int(input("Duration of Experiment (hr):"))
 duration_min = int(input("Duration of Experiment (min):"))
 duration_sec = int(input("Duration of Experiment (sec):"))
-duration_delta = timedelta(seconds = duration_sec, minutes = duration_min, hours = duration_hr)
-
+dur_delta = [duration_hr,duration_min, duration_sec]
+## Will use time delta in the main script1
+#duration_delta = timedelta(seconds = duration_sec, minutes = duration_min, hours = duration_hr)
+#prin
 # Frame Rate
 frame_rate = 1 #fps
 
 # control file parameters
 control ={
     "start_time": exp_start,
-    "duration": duration_delta,
+    "duration": dur_delta,
     "frame_rate": frame_rate
 }
 
 # convert the file into json
 with open("control.json", "w") as outfile:
-    json.dump(dictionary, outfile)
+    json.dump(control, outfile)
