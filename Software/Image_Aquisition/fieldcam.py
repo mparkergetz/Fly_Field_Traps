@@ -5,13 +5,24 @@ from time import sleep
 from datetime import datetime, timedelta
 import os
 import sys
+import json
 ## have this script be something that is user friendly... let's try to convert this to a class later on...
 ## so then this can be later utilized as a function and imported to make things easier
 
 # called PiCamera
 camera = PiCamera()
+
 ## FOR THE PIBEECAM
 # camera.rotation = 270
+
+# load the json file in
+with open('control.json') as json_file:
+    control_data = json.load(json_file)
+print(control_data['start_time'])
+print(control_data['duration'])
+print(control_data['frame_rate'])
+
+
 
 # defined function for UI printing:
 def print_stats():
