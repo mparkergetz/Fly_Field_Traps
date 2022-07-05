@@ -47,5 +47,5 @@ control ={
 }
 
 # convert the file into json
-with open("sample.json", "w") as outfile:
+with open("control.json", "w") as outfile:
     json.dump(dictionary, outfile)
