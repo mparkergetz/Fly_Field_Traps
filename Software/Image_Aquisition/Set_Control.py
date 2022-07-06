@@ -1,4 +1,5 @@
 # Developed by Logan Rower
+# 7/6/2022 newest version..
 from datetime import datetime, timedelta
 import json
 """
@@ -16,29 +17,32 @@ PARAMETERS:
 (brightness, contrast...) -> more to be and can be added for greater control
 """
 # Start Time
-## Today's Date
-today_date = datetime.today().strftime("%Y%m%d")
 ## Current Time in HH:MM:SS
-current_time = datetime.now()
-print("Current Time:", current_time.strftime("%H%M%S"))
+current_time = datetime.now().strftime("%Y%m%d%H%M%S")
+current_time = datetime.strptime(current_time,"%Y%m%d%H%M%S")
+print("Current Time:", current_time)
 ## time from now for when you want to start
-print("Input number of hours, minutes and seconds from current time to start experiment")
-hr_input = int(input("Hours:"))
-min_input = int(input("Minutes:"))
-sec_input = int(input("Seconds:"))
-tdelta = timedelta(seconds = sec_input, minutes = min_input, hours = hr_input)
+print("Time to Start Experiment")
+start_input=input("HH:MM:SS ")
+start_int = start_input.split(":")
+exp_start=current_time.replace(hour = int(start_int[0]), minute = int(start_int[1]), second = int(start_int[2]))
+print("Start Time:", exp_start)
 ## now define the start time of the experiment  
-exp_start = (current_time + tdelta).strftime("%Y%m%d%H%M%S")
+exp_start = exp_start.strftime("%Y%m%d%H%M%S")
 
 # Duration of the Experiment:
-duration_hr = int(input("Duration of Experiment (hr):"))
-duration_min = int(input("Duration of Experiment (min):"))
-duration_sec = int(input("Duration of Experiment (sec):"))
-dur_delta = [duration_hr,duration_min, duration_sec]
-## Will use time delta in the main script1
-#duration_delta = timedelta(seconds = duration_sec, minutes = duration_min, hours = duration_hr)
-#prin
+print("Input Duration of Experiment")
+dur_input = input("HH:MM:SS ")
+duration = dur_input.split(":")
+dur_delta = [int(duration[0]),int(duration[1]), int(duration[2])]
+dur2_delta = timedelta(seconds =int(duration[2]), minutes = int(duration[1]), hours = int(duration[0]))
+
+# End Time:
+end_time = (datetime.strptime(exp_start,"%Y%m%d%H%M%S")+dur2_delta)
+print("End Time:", end_time)
+
 # Frame Rate
+## Add this in!
 frame_rate = 1 #fps
 
 # control file parameters

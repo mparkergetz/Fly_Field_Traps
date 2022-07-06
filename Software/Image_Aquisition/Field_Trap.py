@@ -1,12 +1,15 @@
 # Developed by Logan Rower
-# Version 1 of the Field Trap Script
+# Field Trap Script
+# Use the Flags to allow the user to run a different version of the script
 """
-Need to add try and except functionality in order to be better able to
-use Ctrl-C to exit the script...
+Flags:
+
+'-t' -> Shows and saves a test image 
+
+'-r' -> Runs the timelapse based on json parameters
 
 This is the initial implementation with ZERO SOCKET 
 """
-# This program gives the user the option of whether or not to take a certain number of images or do a timelapse of images
 # from picamera import PiCamera
 from picam_noir import PiCamera2
 #import picam
@@ -32,32 +35,10 @@ start_time = control_data['start_time']
 duration = control_data['duration']
 frame_rate = control_data['frame_rate']
 
-# defined function for UI printing:
-def print_stats():
-    print('''
-    =========================================
-    =========================================
-             Options for imaging           
-    =========================================
-             Please input t or r 
-    =========================================
-    =========================================
-        1. Test [t]
-        2. Timelapse [r](PRESET DURATION IN JSON)
-        3. Kill [ctrl-c]
-    =========================================
-    ''')
-
-# next display the function:
-print_stats()
-## asked user for their option (string)
-user_input = input()
-
-# then the user enters the while loop with another input
-while user_input: 
+while True: 
     # follow the below model for an if statement
     # first if statement for getting a test image
-    if user_input == "t":
+    if sys.argv[1] == "-t":
         try:
             # the path for saving the folders to for the still images
             path = "/home/pi/Desktop/images/windtunnel_images/Still_Images/"
@@ -88,14 +69,11 @@ while user_input:
         except KeyboardInterrupt:
             print("Interrupt")
             break
-        else:
-            print_stats()
-            user_input = input() 
   #   #   #   #   #   #   #   #   #   #   #   
 # second condition is if user desires to run a timelapse
 ###  While within in input 2 there will be no camera preview.
     # run
-    elif user_input == "r":
+    elif sys.argv[1] == "-r":
         run = True
         try:
             # path to save the images to the timelapse folder
@@ -113,7 +91,6 @@ while user_input:
             # set the start time
             current_time = datetime.now().strftime("%Y%m%d%H%M%S")
             if current_time == start_time:
-                print("Time tta")
                 # set the folder for the timelapse
                 timelapse_folder = str(start_time)
                 path_new = os.path.join(path,timelapse_folder)
@@ -151,13 +128,12 @@ while user_input:
                 frame_rate = count/(end-start)
                 print(" frame rate", frame_rate)
                 print("end", time_end)
-                print_stats()
-                user_input = input()
+                break
         except KeyboardInterrupt:
             print("Interrupt")
             break
  
     else:
-        user_input = input() 
+        break
 # Quit the program...    
 quit() 
