@@ -1,8 +1,16 @@
 # Developed by Logan Rower
+# Version 1 of the Field Trap Script
+"""
+Need to add try and except functionality in order to be better able to
+use Ctrl-C to exit the script...
+
+This is the initial implementation with ZERO SOCKET 
+"""
 # This program gives the user the option of whether or not to take a certain number of images or do a timelapse of images
-#from picamera import PiCamera
-from picam_NOIR import PiCamera2
-from time import sleep
+# from picamera import PiCamera
+from picam_noir import PiCamera2
+#import picam
+from time import sleep, perf_counter
 from datetime import datetime, timedelta
 import os
 import sys
@@ -12,192 +20,144 @@ import json
 
 # called PiCamera
 camera = PiCamera2()
-
-# set the awb mode to account for NOIR
+# hue fixx
 camera.awb_mode = 'greyworld'
-
 ## FOR THE PIBEECAM
 # camera.rotation = 270
 
 # load the json file in
 with open('control.json') as json_file:
     control_data = json.load(json_file)
-print(control_data['start_time'])
-print(control_data['duration'])
-print(control_data['frame_rate'])
-
-
+start_time = control_data['start_time']
+duration = control_data['duration']
+frame_rate = control_data['frame_rate']
 
 # defined function for UI printing:
 def print_stats():
     print('''
     =========================================
     =========================================
-            Options for imaging           
+             Options for imaging           
     =========================================
-    Please input an integer value from 1-3,
-    or press 4 to display more options     
+             Please input t or r 
     =========================================
     =========================================
-        1. User Defined Number of Images   
-        2. Timelapse Images for Duration   
-        3. UNDER CONSTRUCTION                                 
-        4. Quit Program                    
+        1. Test [t]
+        2. Timelapse [r](PRESET DURATION IN JSON)
+        3. Kill [ctrl-c]
     =========================================
     ''')
-# defined function for getting timelapse start time 
-def get_time():
-    """ This function will get the current time when requested by the user"""
-    time = datetime.now()
-    time_of_release = time.strftime("%Y-%m-%d %H:%M:%S")
-    return time_of_release
-
-
-# the path for saving the folders to
-path = "/home/pi/Desktop/images/windtunnel_images/Still_Images/"
 
 # next display the function:
 print_stats()
-## asked user for their option
-user_input = int(input())
+## asked user for their option (string)
+user_input = input()
 
 # then the user enters the while loop with another input
-while user_input in range(1,5): # going from 1 to 4
+while user_input: 
     # follow the below model for an if statement
-    # first if statement for user_defined number of images
-    if user_input == 1:
-        # the path for saving the folders to for the still images
-        path = "/home/pi/Desktop/images/windtunnel_images/Still_Images/"
-        print(" You are requesting to take X number of images would you like to proceed (y/n)")
-        img1_input = input()
-        if img1_input == "y":
+    # first if statement for getting a test image
+    if user_input == "t":
+        try:
+            # the path for saving the folders to for the still images
+            path = "/home/pi/Desktop/images/windtunnel_images/Still_Images/"
             camera.resolution = (2592, 1944)
-            print("Please enter the number of images you would like to take")
-            num_imgs = int(input())
-            print("Please specify how much time you want in between images")
-            delay_time = int(input())
-            # now for taking the x number of images a for loop will be set up to take that many images sequentially..
-            for capture in range(1, num_imgs+1):
-                # then introduce the file path and include the data and time into this as well..
-                time_folder = str(datetime.now().strftime("%Y-%m-%d"))
-                ## New path was created to save the images to
-                path_new = os.path.join(path,time_folder)
-                os.makedirs(path_new, exist_ok = True)
-                # location where file will be saved was updated.
-                location = path_new + "/%s.jpg"
-                # Current time for the file
-                time_current = datetime.now().strftime("%Y%m%d%H%M%S.%f")
-                # filename was generated
-                filename = location % time_current
-                # preview the images...
-                #camera.start_preview()
-                
-                
-                # Image was saved to file location
-                camera.capture(filename)
-                
-                sleep(delay_time)
-                # end the preview
-                #camera.stop_preview()
-                
-                
-                #pathname = '/home/pi/Desktop/images/windtunnel_images/'+str(capture)+'.jpg'
-                #camera.capture(pathname)
-            # print_stats(img_input)
-        #     # user_init = int(input())
-        else:
-            # Determine how the user would like to proceed
-            print_stats()
-            user_input = int(input())
-  #   #   #   #   #   #   #   #   #   #   #   
-# second condition is if user
-###  While within in input 2 there will be no camera preview.
-    elif user_input == 2:
-        # path to save the images to the timelapse folder
-        path = "/home/pi/Desktop/images/windtunnel_images/Timelapse/"
-        print("You are requesting to perform a timelapse for X duration, would you like to proceed (y/n)")
-        img2_input = input()
-        if img2_input == "y":
-            camera.resolution = (2592, 1944)
-            # set the frame rate
-            camera.framerate = 2
-            # set the duration
-            print("Duration (Enter whole number of minutes)")
-            time_min = int(input())
-            print("Duration (Enter a whole number of seconds)")
-            time_sec = int(input())
-           
-            # developed the change in time:
-            tdelta = timedelta(seconds = time_sec, minutes = time_min)
-           
-            # set the start time
-            start_time = datetime.now()
-
-            # set the folder for the timelapse
-            timelapse_folder = str(start_time.strftime("%Y-%m-%d"))
-            path_new = os.path.join(path,timelapse_folder)
+            # Take 1 image to view for 30 seconds and can change this within the JSON FILE
+            delay_time = 10
+            # now for taking the 1 number of image with 30 second delay 
+            # then introduce the file path and include the data and time into this as well..
+            time_folder = str(datetime.now().strftime("%Y-%m-%d"))
+            ## New path was created to save the images to
+            path_new = os.path.join(path,time_folder)
             os.makedirs(path_new, exist_ok = True)
-            # added the the time delta to the before time to get the ending time
-            time_end = start_time + tdelta
-            ## checking how many images were created...
-            #### comment this out when program is successful
-            count = 1
-            # documented the location for where all of the files will be saved
-            ## now in the while loop the images will be added to this path
+            # location where file will be saved was updated.
             location = path_new + "/%s.jpg"
-            # now before timelapse starts name it based on
-            print("starting the while loop")
-            # started a preview so that the user can be able to see the image
-            #camera.start_preview()
-            while datetime.now() <= time_end:
-                # new filename with current time
-                #time_current = datetime.now().strftime("%H:%M:%S")
-                time_current = datetime.now()
-                time_current_split = str(time_current.strftime("%H:%M:%S.%f"))
-                filename = location % time_current_split
-                # saved the image
-                ## set the video port to true in order to enable fast image processing...
-                camera.capture(filename, use_video_port = True)
-                #camera.capture(filename)
-                
-                count +=1
-            #camera.stop_preview()
-            print("count", count)
-            frame_rate = count/tdelta.seconds
-            print(" frame rate", frame_rate)
-            print("end", time_end)
-        else:
-           # Determine how the user would like to proceed
-            print_stats()
-            user_input = int(input())
-    # this condition is if user would like to view the images...
-    elif user_input == 3:
-        path = "/home/pi/Desktop/images/windtunnel_images/Video/"
-        location = path + "/%s.h264"
-        print("Would you like to start a 10 second video (y/n")
-        vidinput = input()
-        if vidinput == 'y':
-            sleep(2)
-            current_time = datetime.now()
-            time_current_split = str(time_current.strftime("%Y%m%d%H%M%S.%f"))
-            filename=location % time_current_split
-            print("Start Recording...")
+            # Current time for the file
+            time_current = datetime.now().strftime("%Y%m%d%_H%M%S.%f")
+            # filename was generated
+            filename = location % time_current
+            # preview the images...
             camera.start_preview()
-            camera.wait_recording(10)
-            camera.stop_recording()
+        
+            # Image was saved to file location
+            camera.capture(filename)
+                    
+            sleep(delay_time)
+            # end the preview
             camera.stop_preview()
-            print("End of Recording")
+        except KeyboardInterrupt:
+            print("Interrupt")
+            break
         else:
             print_stats()
-            user_input = int(input())
-    # calibrate the camera.. sets a camera preview with a command to only stop the preview after the user presses a key
-    # make sure the user knows that the following only works when GUI is activated on the Pi
-    #print("You are requesting to look at the images taken, make sure GUI is enabled in order to do so, proceed (y/n)")
-    #img3_input = input()
-        # add the rest of it...
-
-    # last option is to quit the program
-    elif user_input == 4:
-        break
+            user_input = input() 
+  #   #   #   #   #   #   #   #   #   #   #   
+# second condition is if user desires to run a timelapse
+###  While within in input 2 there will be no camera preview.
+    # run
+    elif user_input == "r":
+        run = True
+        try:
+            # path to save the images to the timelapse folder
+            path = "/home/pi/Desktop/images/windtunnel_images/Timelapse/"
+            camera.resolution = (2592, 1944)
+            # set the frame rate (SET IN JSON)
+            camera.framerate = frame_rate
+            # set the duration (SET IN JSON)
+            time_hr = duration[0]
+            time_min = duration[1]
+            time_sec = duration[2]
+            #print("2")
+            # developed the change in time:
+            tdelta = timedelta(seconds = time_sec, minutes = time_min, hours = time_hr)
+            # set the start time
+            current_time = datetime.now().strftime("%Y%m%d%H%M%S")
+            if current_time == start_time:
+                print("Time tta")
+                # set the folder for the timelapse
+                timelapse_folder = str(start_time)
+                path_new = os.path.join(path,timelapse_folder)
+                os.makedirs(path_new, exist_ok = True)
+                # added the the time delta to the before time to get the ending time
+                time_end = (datetime.strptime(start_time,"%Y%m%d%H%M%S") + tdelta)
+                print(time_end.strftime("%Y%m%d%H%M%S"))
+                ## checking how many images were created...
+                #### comment this out when program is successful
+                count = 1
+                # documented the location for where all of the files will be saved
+                ## now in the while loop the images will be added to this path
+                location = path_new + "/%s.jpg"
+                # now before timelapse starts name it based on
+                print("starting the while loop")
+                # started a preview so that the user can be able to see the image
+                #camera.start_preview()
+                start =  perf_counter()
+                while datetime.now() <= time_end:
+                    # new filename with current time
+                    #time_current = datetime.now().strftime("%H:%M:%S")
+                    time_current = datetime.now()
+                    time_current_split = str(time_current.strftime("%H%M%S"))
+                    filename = location % time_current_split
+                    # saved the image
+                    ## set the video port to true in order to enable fast image processing...
+                    camera.capture(filename, use_video_port = True)
+                    #camera.capture(filename)
+                    
+                    count +=1
+                    #camera.stop_preview()
+                end=perf_counter()
+                
+                print("count", count)
+                frame_rate = count/(end-start)
+                print(" frame rate", frame_rate)
+                print("end", time_end)
+                print_stats()
+                user_input = input()
+        except KeyboardInterrupt:
+            print("Interrupt")
+            break
+ 
+    else:
+        user_input = input() 
 # Quit the program...    
 quit() 
