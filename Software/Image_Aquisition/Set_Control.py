@@ -28,7 +28,7 @@ min_input = int(input("Minutes:"))
 sec_input = int(input("Seconds:"))
 tdelta = timedelta(seconds = sec_input, minutes = min_input, hours = hr_input)
 ## now define the start time of the experiment  
-exp_start = (current_time + tdelta).strftime("%Y%m%d_%H%M%S")
+exp_start = (current_time + tdelta).strftime("%Y%m%d%H%M%S")
 
 # Duration of the Experiment:
 duration_hr = int(input("Duration of Experiment (hr):"))
