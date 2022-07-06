@@ -1,7 +1,9 @@
+# This was referenced from...anfractuosity on GitHub
+## https://github.com/raspberrypi/firmware/issues/1167#issuecomment-511798033
+
 import picamera
 from picamera import mmal 
 import ctypes as ct
-
 
 class PiCamera2(picamera.PiCamera):
     AWB_MODES = {
@@ -17,10 +19,3 @@ class PiCamera2(picamera.PiCamera):
         'horizon':       mmal.MMAL_PARAM_AWBMODE_HORIZON,
         'greyworld':     ct.c_uint32(10)
         }
-
-with PiCamera2() as camera:
-    camera.awb_mode = 'greyworld'
-    camera.resolution = (640, 480)
-    camera.start_recording('my_video.h264')
-    camera.wait_recording(5)
-    camera.stop_recording()

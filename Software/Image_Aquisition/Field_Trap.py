@@ -1,6 +1,7 @@
 # Developed by Logan Rower
 # This program gives the user the option of whether or not to take a certain number of images or do a timelapse of images
-from picamera import PiCamera
+#from picamera import PiCamera
+from picam_NOIR import PiCamera2
 from time import sleep
 from datetime import datetime, timedelta
 import os
@@ -10,7 +11,10 @@ import json
 ## so then this can be later utilized as a function and imported to make things easier
 
 # called PiCamera
-camera = PiCamera()
+camera = PiCamera2()
+
+# set the awb mode to account for NOIR
+camera.awb_mode = 'greyworld'
 
 ## FOR THE PIBEECAM
 # camera.rotation = 270
