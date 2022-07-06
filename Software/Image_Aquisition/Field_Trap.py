@@ -126,7 +126,7 @@ while True:
                 
                 print("count", count)
                 frame_rate = count/(end-start)
-                print(" frame rate", frame_rate)
+                print("frame rate", frame_rate)
                 print("end", time_end)
                 break
         except KeyboardInterrupt:
