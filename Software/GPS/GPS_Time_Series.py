@@ -115,14 +115,15 @@ while True:
     gps_dict['lat'].append(lat)
     gps_dict['long'].append(lon)
     gps_dict['time'].append(diff_sec)
+    # continues through while loop until end time reached or until control c...
+    # converted to dataframe after breaking out of loop
+    df = pd.DataFrame.from_dict(gps_dict)
+    location = path_new + "/%s.csv"
+    filepath = location % start_time.strftime("%Y%m%d%H%M%S")
+    # saves csv file to the folder..
+    df.to_csv(filepath, index=False)
+
     print(datetime.now())
     if datetime.now() >= end_time:
         break
 
-# continues through while loop until end time reached or until control c...
-# converted to dataframe after breaking out of loop
-df = pd.DataFrame.from_dict(gps_dict)
-location = path_new + "/%s.csv"
-filepath = location % start_time.strftime("%Y%m%d%H%M%S")
-# saves csv file to the folder..
-df.to_csv(filepath, index=False)
