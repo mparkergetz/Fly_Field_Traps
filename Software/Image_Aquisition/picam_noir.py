@@ -1,5 +1,9 @@
 # This was referenced from...anfractuosity on GitHub
 ## https://github.com/raspberrypi/firmware/issues/1167#issuecomment-511798033
+"""
+This provides a fix to any image issues regarding IR light 
+and the NOIR Cameras
+"""
 import picamera
 from picamera import mmal 
 import ctypes as ct

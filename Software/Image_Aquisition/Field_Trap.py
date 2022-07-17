@@ -2,6 +2,8 @@
 # Field Trap Script
 # Use the Flags to allow the user to run a different version of the script
 """
+This Script is to be used for the NOIR Camera
+
 Flags:
 
 '-t' -> Shows and saves a test image 
@@ -9,6 +11,8 @@ Flags:
 '-r' -> Runs the timelapse based on json parameters
 
 This is the initial implementation with ZERO SOCKET 
+
+Updated Version: 7/15/2022
 """
 # from picamera import PiCamera
 from picam_noir import PiCamera2
@@ -66,6 +70,7 @@ while True:
             sleep(delay_time)
             # end the preview
             camera.stop_preview()
+            break
         except KeyboardInterrupt:
             print("Interrupt")
             break

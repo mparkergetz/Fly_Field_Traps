@@ -10,7 +10,8 @@ This is done so that the internet connection on the laptop can be utilized in or
 ## Soldering
 * soldering header on the GPS unit
 
-## 
+## RTC Set Up
+* First the 
 
 ## Witty Pi Software Installation
 Once you are connected to internet perform the following commands
