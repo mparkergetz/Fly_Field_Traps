@@ -3,10 +3,11 @@
 
 # Editted by Logan Rower to add functionality to have a csv file for each experiment with the data
 """
-This script is meant to create a csv file for each test in order to get reading on 
+This script is meant to continuosuly write to a csv file..
+
 how accurate the GPS coordinates are with the current module over time
 
-Last Editted:  7/12/2022 by Logan Rower
+Last Editted:  7/16/2022 by Logan Rower
 """
 
 # Simple GPS module demonstration.
