@@ -7,7 +7,9 @@ This script is meant to continuosuly write to a csv file..
 
 how accurate the GPS coordinates are with the current module over time
 
-Last Editted:  7/16/2022 by Logan Rower
+Last Editted:  7/18/2022 by Logan Rower
+
+Changed where files are saved
 """
 
 # Simple GPS module demonstration.
@@ -66,7 +68,7 @@ gps.send_command(b"PMTK220,5000")
 time.sleep(5)
 # First set up the folder that will essentially be responsible for holding the data for
 ## The Day in which experiments took place. Then csv files will be saved based on the start time of the experiment
-path = "/home/pi/Desktop/Field_Trap/GPS_data/"
+path = "/home/pi/Field_Trap/GPS_data/"
 start_time = datetime.now() # will use start time when we are in the end making the csv file for the experiment...
 print(start_time)
 

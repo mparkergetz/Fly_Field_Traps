@@ -16,8 +16,12 @@ Python Base Code Source:
 1. Connect the pi and laptop either to the same network or via ethernet
 2. once connected via ssh into the pis then use the command below to find the local pis ip addresses on the network if it is unknown
     ping raspberrypi.local
-3. Then once connected to the pi run the following command
-    nohup python3 gpsdata.py &
+3. Then once connected to the pi run the following commands
+    First the following in order to set the port:
+    sudo gpsd /dev/serial0 -F /var/run/gpsd.sock
+    
+    Then do this in order to run the script:
+    nohup python3 gpsdata.py &  <-runs in the background and can disconnect from ssh
 4. Then control c
 5. Then exit out of ssh
 6. Then after the timer you have set for 5 minutes has elapsed the script will be completed. The following will be used for both pis to copy

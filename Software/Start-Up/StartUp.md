@@ -22,5 +22,7 @@
 > Password to get into accesspoint = raspberry
 
 ## Bash Start Up:
+* First will initialize serial port 0 to recieve the GPS information. 
+* Will then run the gpsdata script
 
 
