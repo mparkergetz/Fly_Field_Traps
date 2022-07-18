@@ -32,7 +32,7 @@ exp_start = exp_start.strftime("%Y%m%d%H%M%S")
 
 # Duration of the Experiment:
 print("Input Duration of Experiment")
-dur_input = input("HH:MM:SS ")
+dur_input = input("HH:MM:SS (24-Hr) ")
 duration = dur_input.split(":")
 dur_delta = [int(duration[0]),int(duration[1]), int(duration[2])]
 dur2_delta = timedelta(seconds =int(duration[2]), minutes = int(duration[1]), hours = int(duration[0]))
