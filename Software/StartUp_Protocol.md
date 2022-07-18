@@ -42,28 +42,30 @@ is plugging each individual pi to the Lab laptop.
 Saves to a json file.
     * Give youself some extra time to run 1 or 2 test images before starting the experiment
 
-    ` cd Field_Trap/Software/Image_Acquisition `
+    ` cd Field_Trap/Image_Acquisition `
     ` python3 Set_Control.py `
 
 ## Step 7: Run Test Image
 * Before the start the experiment take a test image with the following command
     * This is assuming that you are within the same Image_Acquistion directory
 
-    ` cd Field_Trap/Software/Image_Acquisition `
+    ` cd Field_Trap/Image_Acquisition `
     ` python3 Field_Trap.py -t`
 
 * After running proceed to check the following directory for the image 
-` cd Field_Trap/Software/Image_Acquisition/images/test_images`
+` cd Field_Trap/Image_Acquisition/images/test_images`
                         OR
-` cd Field_Trap/Software/Image_Acquisition/images/timelapse`
+` cd Field_Trap/Image_Acquisition/images/timelapse`
 
 ## Step 8: File Transfer
 * **THIS PROCESSES WILL BE AUTOMATED BUT FOR NOW USE THE FOLLOWING**
 
+* FOLDER SCP IS NOT CURRENTLY WORKING....
+
 * For a single file to current directory on laptop:
-    ` scp pi[IPADDRESS]:~/Field_Trap/images/timelapse/YYYY-MM-DD/FILENAME.jpg . `
+    ` scp pi@[IPADDRESS]:~/Field_Trap/Image_Acquisition/images/timelapse/STARTIME/FILENAME.jpg . `
 
 * For the contents of an entire directory to specific directory on laptops:
 
-    ` scp -r pi[IPADDRESS]: ~/Field_Trap/images/timelapse/YYYY-MM-DD /Desktop/images/YYYY-MM-DD`
+    ` scp -r pi@[IPADDRESS]: ~/Field_Trap/Image_Acquisition/images/timelapse/STARTTIME /Desktop/images/STARTTIME `
 
