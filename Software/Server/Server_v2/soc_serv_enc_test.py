@@ -73,12 +73,6 @@ PORT = 5050
 ## This Stays Constant
 SERVER = '192.168.220.91'
 
-#SERVER FOR UBUNTU MACHINE (LOGAN's HOME)
-#SERVER = '192.168.86.129'
-
-# SERVER FOR UBUNTU MACHINE (LOGAN'S LAPTOP ON PIAP)
-#SERVER = '192.168.220.60'
-
 #print(SERVER)
 # ADDR: address that we will use to bind to the socket
 ADDR = (SERVER, PORT)
