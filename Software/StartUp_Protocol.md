@@ -69,3 +69,5 @@ Saves to a json file.
 
     ` scp -r pi@[IPADDRESS]: ~/Field_Trap/Image_Acquisition/images/timelapse/STARTTIME /Desktop/images/STARTTIME `
 
+Example:
+scp pi@10.42.0.198:~/Field_Trap/Image_Acquisition/images/test_images/2022-07-18/20220718145122.540588.jpg .
