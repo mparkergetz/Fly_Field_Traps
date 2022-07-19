@@ -11,7 +11,7 @@ is plugging each individual pi to the Lab laptop.
     * Make sure beforehand that the pis can connect to this network on boot
     * After powering the pis and waiting 1 minute to ensure that the pis have connected then connect the laptop to the same network
 
-## Step 3: SSH into Pis
+## Step 3.0: SSH into Pis
 * Determine the IP Address for the Pi running the following
 
     ` ping raspberrypi.local `
@@ -19,6 +19,10 @@ is plugging each individual pi to the Lab laptop.
 * Now knowing the IP Address for the Pi ssh into the pi (it is understood that the user knows the pi's username and password)
 
     ` ssh pi@[IPADDRESS] `
+
+## Step 3.1: Open the VNC Viewer on Laptop and connect to the pi
+
+* On the Ubuntu Laptop open the vnc viewer and either enter or select the pi device that has the appropriate IP address.
 
 ## Step 4: Run Start-Up Bash Script
 * Execute the start_exp.sh in order to initialize the GPS on serial port 0
@@ -52,6 +56,11 @@ Saves to a json file.
     ` cd Field_Trap/Image_Acquisition `
     ` python3 Field_Trap.py -t`
 
+    OR if a non NOIR CAMERA...
+    ` python3 Field_Trap_HQ.py -t`
+
+    * do -r if you want to run the timelapse
+
 * After running proceed to check the following directory for the image 
 ` cd Field_Trap/Image_Acquisition/images/test_images`
                         OR
@@ -68,6 +77,3 @@ Saves to a json file.
 * For the contents of an entire directory to specific directory on laptops:
 
     ` scp -r pi@[IPADDRESS]: ~/Field_Trap/Image_Acquisition/images/timelapse/STARTTIME /Desktop/images/STARTTIME `
-
-Example:
-scp pi@10.42.0.198:~/Field_Trap/Image_Acquisition/images/test_images/2022-07-18/20220718145122.540588.jpg .
