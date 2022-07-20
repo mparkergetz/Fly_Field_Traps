@@ -61,6 +61,7 @@ Saves to a json file.
 
     * do -r if you want to run the timelapse
 
+    nohup python3 Field_Trap.py -r & 
 * After running proceed to check the following directory for the image 
 ` cd Field_Trap/Image_Acquisition/images/test_images`
                         OR
