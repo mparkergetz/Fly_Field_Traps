@@ -2,6 +2,4 @@
 sudo gpsd /dev/serial0 -F /var/run/gpsd.sock
 
 cd Field_Trap
-nohup python3 gpsdatatext.py &
-
-
+python3 gpsdatatext.py
