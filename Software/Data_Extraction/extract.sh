@@ -8,7 +8,7 @@
 ## Will need to be refined but for now it works well
 file=~/repositories/Fly_Field_Traps/Software/Data_Extraction/ip_list.json
 pi_array=("Pi0" "Pi1" "Pi2" "Pi3" "Pi4" "Pi5" "Pi6" "Pi7" "Pi8")
-echo "Enter Pi1 "
+echo "Enter Pi# "
 read pi_num
 echo $pi_num
 other=${arr[@]:1:1}

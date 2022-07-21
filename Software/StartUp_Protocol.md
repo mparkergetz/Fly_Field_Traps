@@ -11,43 +11,65 @@ is plugging each individual pi to the Lab laptop.
     * Make sure beforehand that the pis can connect to this network on boot
     * After powering the pis and waiting 1 minute to ensure that the pis have connected then connect the laptop to the same network
 
-## Step 3.0: SSH into Pis
+## Step 3: Test Image on Pi through RealVNC
 * Determine the IP Address for the Pi running the following
 
     ` ping raspberrypi.local `
 
-* Now knowing the IP Address for the Pi ssh into the pi (it is understood that the user knows the pi's username and password)
+* Now knowing the IP Address for the Pi open VNC Viewer on the laptop and select the pi device with the appropriate IP address (it is understood that the user knows the pi's username and password)
+
+* User can also ssh into the pi using the following terminal command:
 
     ` ssh pi@[IPADDRESS] `
 
-## Step 3.1: Open the VNC Viewer on Laptop and connect to the pi
+* to run a test image on the pi go to the following directory
 
-* On the Ubuntu Laptop open the vnc viewer and either enter or select the pi device that has the appropriate IP address.
+* now execute the following command
 
-## Step 4: Run Start-Up Bash Script
-* Execute the start_exp.sh in order to initialize the GPS on serial port 0
+    `python3 Field_Trap.py -t `
+    
+    OR IF AN HQ CAMERA (Telephoto or Wide Angle Lens)
 
-    ` ./start_exp.sh `
+    `python3 Field_Trap_HQ.py -t `
 
-* This will initialize but also run gpsdatatext.py and save the gpsdata to a text file
-
-* You can go to the following directory on the pi to determine whether or not the pi is recieving the GPS information
-
-    `cd Field_Trap/GPS_data/YYYY-MMM-DD`
-
-## Step 5: RTC Time Check
+## Step 4: Check the RTC Time 
 * Will need to verify the RTC time to current time to ensure that the RTC clock is working appropriately.
     * This needs to be done before leaving for the field experiment, but also before starting the field experiment as a double check
 
     ` sudo hwclock -r `
 
-## Step 6: Set Experiment Start Time and Duration
-* The Set_Control.py script will be run to set framerate, start time and duration.
-Saves to a json file.
-    * Give youself some extra time to run 1 or 2 test images before starting the experiment
+## Step 5: Update control.json file on laptop 
+* Run the Set_Control.py script to update the control.json file on the the laptop that will be extracted to the pi
+* Disconnect from the VNC Viewer if you haven't already and proceed to the terminal and go to the following directory:
 
-    ` cd Field_Trap/Image_Acquisition `
-    ` python3 Set_Control.py `
+    ` cd ~/repositories/Fly_Field_Traps/Software/Image_Acquisition`
+
+* Run the following python command 
+    * (be mindful that this control file is what will be used for each pi unless you change it before running the experiment on the pi)
+
+    ` python3 Set_Control.py`
+
+## Step 6: Run Start-Up Bash Script
+* Now that the control.json file has been updated with the appropriate time and duration you can then ssh into the pi device from the terminal
+
+    ` ssh pi@[IPADDRESS] `
+
+* Execute the start_exp.sh in order to pull the current control.json file, initialize the GPS on serial port 0, and start the timelapse and GPS scripts in the background 
+    * with timelapse starting at x time (defined in control.json) and GPS going for x minutes
+    * gps data will be saved to a textfile, and the timelapse will record image files to a folder.
+
+    ` ./start_exp.sh `
+
+* You can go to the following directory on the pi to determine whether or not the pi is recieving the GPS information
+
+    `cd Field_Trap/GPS_data/YYYY-MMM-DD`
+
+* You can go to the following directory on the pi to determine whether the pi is saving images
+
+    `cd Field_Trap/Image_Acquisition/images/timelapse/YYYY-MMM-DD`
+
+    `more STARTTIME`
+
 
 ## Step 7: Run Test Image
 * Before the start the experiment take a test image with the following command
@@ -68,21 +90,23 @@ Saves to a json file.
 ` cd Field_Trap/Image_Acquisition/images/timelapse`
 
 ## Step 8: File Transfer
-* **THIS PROCESSES WILL BE AUTOMATED BUT FOR NOW USE THE FOLLOWING**
+* In order to perform this file transfer method the ip_list.json needs to be finalized with all IP addresses from the Pis
 
-* FOLDER SCP IS NOT CURRENTLY WORKING....
+* In the Terminal go to the following directory on the laptop
 
-* For a single file to current directory on laptop:
-    ` scp pi@[IPADDRESS]:~/Field_Trap/Image_Acquisition/images/timelapse/STARTIME/FILENAME.jpg . `
+    `cd ~/repositories/Fly_Field_Traps/Software/Data_Extraction`
 
-* For the contents of an entire directory to specific directory on laptops:
+* After inputting this command run the following bash script to start the file transfer process (for the current date)
 
-    ` scp -r pi@[IPADDRESS]: ~/Field_Trap/Image_Acquisition/images/timelapse/STARTTIME /Desktop/images/STARTTIME `
+    `./extract.sh`
+    
+    * If this bash script does not run then do `chmod +x extract.sh` in order to make it an executable
 
+* The bash script will require the user to input the Pi Number which would be in range of "Pi1" to Pi8". 
 
+* The script will then take the current date and find the directory corresponding to the current date. As such it will copy everything within it and transfer it over. This means that if multiple tests were run in a day then all the user would need to do is run this script again after that test was completed. Then a new folder for the start time of the experiment will be generated.
 
-
-
+    * scp is used to transfer the files and jq is used in order to grab the IP Address out of the json file.
 
 ## NEW: 7/20/2022
 1st -> Run the Set_Control.py script on the laptop to set the control.json file. 
