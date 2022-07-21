@@ -11,8 +11,12 @@ is plugging each individual pi to the Lab laptop.
     * Make sure beforehand that the pis can connect to this network on boot
     * After powering the pis and waiting 1 minute to ensure that the pis have connected then connect the laptop to the same network
 
+* May have to open the known_hosts file on the laptop and delete the listed entry if there is an error regarding the "known host". Since
+this is likely due to the fact that the IP address you are trying to use was utilized for something else previously.
+    * All that is needed is to go into this "known_hosts" file and delete the line is referenced.
+
 ## Step 3: Test Image on Pi through RealVNC
-* Determine the IP Address for the Pi running the following
+* Determine the IP Address for the Pi running the following in the terminal
 
     ` ping raspberrypi.local `
 
@@ -23,6 +27,8 @@ is plugging each individual pi to the Lab laptop.
     ` ssh pi@[IPADDRESS] `
 
 * to run a test image on the pi go to the following directory
+
+    `cd Field_Trap/
 
 * now execute the following command
 
@@ -39,8 +45,9 @@ is plugging each individual pi to the Lab laptop.
     ` sudo hwclock -r `
 
 ## Step 5: Update control.json file on laptop 
-* Run the Set_Control.py script to update the control.json file on the the laptop that will be extracted to the pi
-* Disconnect from the VNC Viewer if you haven't already and proceed to the terminal and go to the following directory:
+* Disconnect from the VNC Viewer if you haven't already and proceed to the terminal to run the Set_Control.py script
+    * This will update the control.json file on the the laptop that will be extracted to the pi follow the below steps to do this...
+* Go to the following directory:
 
     ` cd ~/repositories/Fly_Field_Traps/Software/Image_Acquisition`
 
@@ -60,11 +67,16 @@ is plugging each individual pi to the Lab laptop.
 
     ` ./start_exp.sh `
 
-* You can go to the following directory on the pi to determine whether or not the pi is recieving the GPS information
+        * You will see something like this: "nohup: nohup: ignoring input and appending output to 'nohup.out'appending output to 'nohup.out'"
+        When this appears wait 15 seconds to make sure that both files are in the background and then Ctrl-C out.
+
+* exit out of the pi device
+
+* You can ssh back into the pi and go to the following directory on the pi to determine whether or not the pi is recieving the GPS information
 
     `cd Field_Trap/GPS_data/YYYY-MMM-DD`
 
-* You can go to the following directory on the pi to determine whether the pi is saving images
+* When the experiment starts you can go to the following directory on the pi to determine whether the pi is saving images
 
     `cd Field_Trap/Image_Acquisition/images/timelapse/YYYY-MMM-DD`
 
@@ -118,7 +130,3 @@ is plugging each individual pi to the Lab laptop.
 -> Need to have OPENSSH installed on laptop for this to work for the scp process to work that is...
 
 4th - > Then after the start_exp bash script has pulled the current json file it will proceed to start the gps and timelapse scripts at the same time.
-
-Why this is nice: 
-* This reduces roughly 4-5 steps into 2 steps, and reduces the number of keystrokes for the user. 
-
