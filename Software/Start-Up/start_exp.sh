@@ -6,6 +6,6 @@ scp flyranch@[IPADDRESS]:~/repositories/Fly_Field_Traps/Software/Image_Acquisiti
 sudo gpsd /dev/serial0 -F /var/run/gpsd.sock
 
 cd Field_Trap
-nohup python3 gpsdatatext.py &
+nohup python3 gpsdatatext.py & nohup python3 Field_Trap.py -r &
 
 
