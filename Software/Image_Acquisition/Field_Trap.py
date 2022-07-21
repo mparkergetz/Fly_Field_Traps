@@ -1,6 +1,11 @@
 # Developed by Logan Rower
 # Field Trap Script
 # Use the Flags to allow the user to run a different version of the script
+
+
+# NEED TO ALLOW THE DIRECTORY THAT IS THE START TIME TO HAVE THE PI NAME AS WELL!!!
+
+
 """
 This Script is to be used for the HQ Camera 
 
