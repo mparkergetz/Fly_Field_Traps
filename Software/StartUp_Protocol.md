@@ -78,3 +78,23 @@ Saves to a json file.
 * For the contents of an entire directory to specific directory on laptops:
 
     ` scp -r pi@[IPADDRESS]: ~/Field_Trap/Image_Acquisition/images/timelapse/STARTTIME /Desktop/images/STARTTIME `
+
+
+
+
+
+
+## NEW: 7/20/2022
+1st -> Run the Set_Control.py script on the laptop to set the control.json file. 
+
+2nd -> ssh into each pi after they have been postioned and run the test image script to view the iamge within VNC Viewer (OR SOCKET/PARAMIKO SERVER (IMPLEMENT THIS LATER ON))
+
+3rd -> Then run the start_exp script by sshing into each pi. This will pull the current version of the json file after we have inputted the password for the laptop
+
+-> Need to have OPENSSH installed on laptop for this to work for the scp process to work that is...
+
+4th - > Then after the start_exp bash script has pulled the current json file it will proceed to start the gps and timelapse scripts at the same time.
+
+Why this is nice: 
+* This reduces roughly 4-5 steps into 2 steps, and reduces the number of keystrokes for the user. 
+
