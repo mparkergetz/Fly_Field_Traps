@@ -2,10 +2,6 @@
 # Field Trap Script
 # Use the Flags to allow the user to run a different version of the script
 
-
-# NEED TO ALLOW THE DIRECTORY THAT IS THE START TIME TO HAVE THE PI NAME AS WELL!!!
-
-
 """
 This Script is to be used for the HQ Camera 
 
@@ -134,7 +130,7 @@ while True:
             current_time = datetime.now().strftime("%Y%m%d%H%M%S")
             if current_time == start_time:
                 # set the folder for the timelapse
-                timelapse_folder = str(start_time)
+                timelapse_folder = "Pi3_"+str(start_time)
                 path_new = os.path.join(time_path,timelapse_folder)
                 os.makedirs(path_new, exist_ok = True)
                 # added the the time delta to the before time to get the ending time

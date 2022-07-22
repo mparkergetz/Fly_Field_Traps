@@ -120,13 +120,13 @@ this is likely due to the fact that the IP address you are trying to use was uti
 
     * scp is used to transfer the files and jq is used in order to grab the IP Address out of the json file.
 
-## NEW: 7/20/2022
-1st -> Run the Set_Control.py script on the laptop to set the control.json file. 
+## NEW: 7/21/2022
+* Adding Pi Name to the File and folder names in order to track the pis for each experiment.
+    - Pi1 -> GOOD
+    - Pi4 -> GOOD 
+    - Pi5 -> GOOD
+    - Pi8 -> GOOD
+* Bash Script + GPS Test....
 
-2nd -> ssh into each pi after they have been postioned and run the test image script to view the iamge within VNC Viewer (OR SOCKET/PARAMIKO SERVER (IMPLEMENT THIS LATER ON))
 
-3rd -> Then run the start_exp script by sshing into each pi. This will pull the current version of the json file after we have inputted the password for the laptop
-
--> Need to have OPENSSH installed on laptop for this to work for the scp process to work that is...
-
-4th - > Then after the start_exp bash script has pulled the current json file it will proceed to start the gps and timelapse scripts at the same time.
+** NEED TO HAVE OPENSSH INSTALLED ON LAPTOP FOR THIS TO WORK TO DO SCP ...
