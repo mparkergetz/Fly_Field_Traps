@@ -3,14 +3,12 @@
 
 # Editted by Logan Rower to add functionality to have a csv file for each experiment with the data
 """
-This script is meant to continuosuly write to a text file..
+This script is meant to write to a text file..for the duration
+of the Field_Trap Experiment
 
 how accurate the GPS coordinates are with the current module over time
 
 Last Editted:  7/22/2022 by Logan Rower
-- For Pi1 but can be editted for other pis such that file and folder names
-are labeled for the experiment starttime and with the specific pi number the data
-is from
 """
 
 # Simple GPS module demonstration.
@@ -23,6 +21,8 @@ import busio
 from datetime import datetime, timedelta
 import adafruit_gps
 import os
+import sys
+import json
 #import pandas as pd
 
 # Create a serial connection for the GPS connection using default speed and
@@ -70,7 +70,6 @@ time.sleep(5)
 ## The Day in which experiments took place. Then csv files will be saved based on the start time of the experiment
 path = "/home/pi/Field_Trap/GPS_data/"
 
-# load the json file in
 with open('control.json') as json_file:
     control_data = json.load(json_file)
 start_time = control_data['start_time']
@@ -80,31 +79,44 @@ duration = control_data['duration']
 time_hr = duration[0]
 time_min = duration[1]
 time_sec = duration[2]
+# developed the change in time:
+tdelta = timedelta(seconds = time_sec, minutes = time_min, hours = time_hr)
 
 # Set the time to end the experiment
-## Experiment runs for 5 minutes
-tdelta = timedelta(seconds = time_sec, minutes = time_min, hours = time_hr)
-end_time = start_time +tdelta
+end_time = (datetime.strptime(start_time,"%Y%m%d%H%M%S") + tdelta)
 
-print(f"End time:{end_time}")
+#print(f"End time:{end_time}")
 
-# created the folder for the start date
-gps_fold_name ="Pi1_"+start_time.strftime("%Y%m%d%H%M%S")
-path_new = os.path.join(path,gps_fold_name )
+
+date_folder = str(datetime.now().strftime("%Y-%m-%d"))
+
+# add folder to the path 
+path_new = os.path.join(path,date_folder)
 os.makedirs(path_new, exist_ok = True)
 
 # initial time
-last_print = int(start_time.strftime("%Y%m%d%H%M%S"))
+#last_print = int(start_time.strftime("%Y%m%d%H%M%S"))
 
 # Set up a dictionary and then converted to a dataframe
 # # that will be used to house both the time series data as well as the lat and long data
 # recorded time in seconds (will run experiment for 5 minutes...)
 
+
+# Created the textfile that will be named with the start time
 location = path_new + "/Pi1_%s.txt"
-filepath = location % start_time.strftime("%Y%m%d%H%M%S")
-if current_time >= start_time:
-    with open(filepath, 'w') as writer:
-        while True:
+filepath = location % str(start_time)
+
+start_fmt = datetime.strptime(start_time,"%Y%m%d%H%M%S")
+Kill =  True
+current_time = datetime.now()
+
+while Kill:
+    #print("In")
+    current_time = datetime.now()
+    if current_time >= start_fmt and end_time > current_time:
+        with open(filepath, 'a') as writer: 
+            #print("Time Check")
+            #print("GPS READ")
             # Make sure to call gps.update() every loop iteration and at least twice
             # as fast as data comes from the GPS unit (usually every second).
             # This returns a bool that's true if it parsed new data (you can ignore it
@@ -114,15 +126,15 @@ if current_time >= start_time:
             # Every second print out current location details if there's a fix.
             # Also will save to a new file in the directory GPS_DATA
             current = datetime.now()
-            diff = (current - start_time)
+            diff = (current - start_fmt)
             diff_sec =int(diff.total_seconds())
             # gps long and lat
             lat = gps.latitude
             lon = gps.longitude
-
             # saves data to the text file to the folder..
             writer.write(str(diff_sec)+" "+str(lat)+" "+str(lon)+"\n")
             # continues through while loop until end time reached
-            print(datetime.now())
-            if datetime.now() >= end_time:
-                break
+            #print(datetime.now())
+            current_time = datetime.now()
+    elif end_time <= current_time:
+        Kill = False
