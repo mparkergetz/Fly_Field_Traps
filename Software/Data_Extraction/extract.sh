@@ -50,23 +50,23 @@ elif [ "$pi_num" = "$PI3" ]; then
 	ip_new=$(sed -e 's/^"//' -e 's/"$//' <<<"$ip_new")
 	echo $ip_new
 	#scp -r pi@$ip_new:~/Field_Trap/Image_Acquisition/images/timelapse/$d ~/Desktop/Field_Trap_Exps
-elif [ "$pi_num" = "$PI1" ]; then
-	ip_new=$(jq ".Pi1" ip_list.json)
+elif [ "$pi_num" = "$PI4" ]; then
+	ip_new=$(jq ".Pi4" $file)
 	echo $ip_new
 	ip_new=$(sed -e 's/^"//' -e 's/"$//' <<<"$ip_new")
 	echo $ip_new
-elif [ "$pi_num" = "$PI1" ]; then
-	ip_new=$(jq ".Pi1" ip_list.json)
+elif [ "$pi_num" = "$PI5" ]; then
+	ip_new=$(jq ".Pi5" $file)
 	echo $ip_new
 	ip_new=$(sed -e 's/^"//' -e 's/"$//' <<<"$ip_new")
 	echo $ip_new
-elif [ "$pi_num" = "$PI1" ]; then
-	ip_new=$(jq ".Pi1" ip_list.json)
+elif [ "$pi_num" = "$PI6" ]; then
+	ip_new=$(jq ".Pi6" ip_list.json)
 	echo $ip_new
 	ip_new=$(sed -e 's/^"//' -e 's/"$//' <<<"$ip_new")
 	echo $ip_new
-elif [ "$pi_num" = "$PI1" ]; then
-	ip_new=$(jq ".Pi1" ip_list.json)
+elif [ "$pi_num" = "$PI7" ]; then
+	ip_new=$(jq ".Pi7" ip_list.json)
 	echo $ip_new
 	ip_new=$(sed -e 's/^"//' -e 's/"$//' <<<"$ip_new")
 	echo $ip_new

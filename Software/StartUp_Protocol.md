@@ -83,25 +83,7 @@ this is likely due to the fact that the IP address you are trying to use was uti
     `more STARTTIME`
 
 
-## Step 7: Run Test Image
-* Before the start the experiment take a test image with the following command
-    * This is assuming that you are within the same Image_Acquistion directory
-
-    ` cd Field_Trap/Image_Acquisition `
-    ` python3 Field_Trap.py -t`
-
-    OR if a non NOIR CAMERA...
-    ` python3 Field_Trap_HQ.py -t`
-
-    * do -r if you want to run the timelapse
-
-    nohup python3 Field_Trap.py -r & 
-* After running proceed to check the following directory for the image 
-` cd Field_Trap/Image_Acquisition/images/test_images`
-                        OR
-` cd Field_Trap/Image_Acquisition/images/timelapse`
-
-## Step 8: File Transfer
+## Step 7: File Transfer
 * In order to perform this file transfer method the ip_list.json needs to be finalized with all IP addresses from the Pis
 
 * In the Terminal go to the following directory on the laptop
@@ -114,19 +96,23 @@ this is likely due to the fact that the IP address you are trying to use was uti
     
     * If this bash script does not run then do `chmod +x extract.sh` in order to make it an executable
 
-* The bash script will require the user to input the Pi Number which would be in range of "Pi1" to Pi8". 
+* The bash script will require the user to input the Pi Number which would be in range of "Pi1" to Pi9". The Pis will be labelled with the appropriate number...
 
 * The script will then take the current date and find the directory corresponding to the current date. As such it will copy everything within it and transfer it over. This means that if multiple tests were run in a day then all the user would need to do is run this script again after that test was completed. Then a new folder for the start time of the experiment will be generated.
 
     * scp is used to transfer the files and jq is used in order to grab the IP Address out of the json file.
 
-## NEW: 7/21/2022
-* Adding Pi Name to the File and folder names in order to track the pis for each experiment.
-    - Pi1 -> GOOD
-    - Pi4 -> GOOD 
-    - Pi5 -> GOOD
-    - Pi8 -> GOOD
-* Bash Script + GPS Test....
+
+### 7/22/2022
+* Pis Status:
+    - Pi1 -> Image: GOOD, GPS: GOOD
+    - Pi2 -> Image: GOOD, GPS: GOOD
+    - Pi3 -> Image: GOOD, GPS: NONE
+    - Pi4 -> Image: GOOD, GPS: GOOD
+    - Pi5 -> Image: GOOD, GPS: GOOD
+    - Pi7 -> Image: GOOD, GPS: GOOD
+    - Pi8 -> Image: GOOD, GPS: GOOD
+    - Pi9 -> Image: GOOD, GPS: GOOD
 
 
-** NEED TO HAVE OPENSSH INSTALLED ON LAPTOP FOR THIS TO WORK TO DO SCP ...
+* NEED TO HAVE OPENSSH INSTALLED ON LAPTOP FOR THIS TO WORK TO DO SCP ...
