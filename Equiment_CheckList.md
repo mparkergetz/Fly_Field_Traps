@@ -8,9 +8,11 @@
 * Screwdriver (For Standoffs)
 * Fully Charged Laptop (w/ ssh and vnc capabilities)
 * Backpack or box (to carry equpiment)
-* (x8) Shiffon
+* (x8) chiffon
 * (x8) Trap Boxes
 * Fly Food
+* Anemometer with associated equipment
+* Tripod stand
 
 ### Additional:
 * Monitor
@@ -19,4 +21,6 @@
 * Measuring Tape
 * Pen
 * Notebook
+* sieve, paintbrush, jars of ethanol for collecting captured flies
+* flies with cover
  
