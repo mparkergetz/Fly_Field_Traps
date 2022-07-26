@@ -61,19 +61,20 @@ elif [ "$pi_num" = "$PI5" ]; then
 	ip_new=$(sed -e 's/^"//' -e 's/"$//' <<<"$ip_new")
 	echo $ip_new
 elif [ "$pi_num" = "$PI6" ]; then
-	ip_new=$(jq ".Pi6" ip_list.json)
+	ip_new=$(jq ".Pi6" $file)
 	echo $ip_new
 	ip_new=$(sed -e 's/^"//' -e 's/"$//' <<<"$ip_new")
 	echo $ip_new
 elif [ "$pi_num" = "$PI7" ]; then
-	ip_new=$(jq ".Pi7" ip_list.json)
+	ip_new=$(jq ".Pi7" $file)
 	echo $ip_new
 	ip_new=$(sed -e 's/^"//' -e 's/"$//' <<<"$ip_new")
 	echo $ip_new
 elif [ "$pi_num" = "$PI8" ]; then
-	ip_new=$(jq ".Pi8" ip_list.json)
+	ip_new=$(jq ".Pi8" $file)
 	echo $ip_new
 	ip_new=$(sed -e 's/^"//' -e 's/"$//' <<<"$ip_new")
 	echo $ip_new
 fi
-scp -r pi@$ip_new:~/Field_Trap/Image_Acquisition/images/timelapse/$d ~/Desktop/Field_Trap_Exps
+scp -r pi@$ip_new:~/Field_Trap/Image_Acquisition/images/timelapse/$d /media/flyranch/Samsung_T5/Field_Trap_Exps
+#scp -r pi@$ip_new:~/Field_Trap/Image_Acquisition/images/timelapse/$d ~/Desktop/Field_Trap_Exps
