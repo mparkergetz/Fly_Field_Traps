@@ -170,6 +170,60 @@ while True:
         except KeyboardInterrupt:
             print("Interrupt")
             break
+    
+    # FIX FOR FRAMERATE ISSUE:
+    """
+    The below method will need to be implemented and tested
+    This will serve to be the new method for how images will be saved and taken
+    Need to additionally test to determine whether this is for a fact 
+    will not cause a loss of frames and will work for any frame rate.
+    
+    """
+    elif sys.argv[1] == "-q":
+        run = True
+        # path to save the images to the timelapse folder
+        #path = "/home/pi/Field_Trap/Image_Acquisition/images/timelapse/"
+        camera.resolution = (1920,1080)
+        # set the frame rate (SET IN JSON)
+        camera.framerate = .5
+        # set the duration 
+        time_hr = 1
+        #print("2")
+        # developed the change in time:
+        tdelta = timedelta(hours = 1)
+        # set the start time
+        current_time = datetime.now().strftime("%Y%m%d%H%M%S")
+        # If the time is greater than or equal to the start time then it will start...
+        print(current_time)
+        #if current_time >= start_time:
+        # set the folder for the timelapse
+        timelapse_folder ="Pi1_"+str(current_time)
+        path_new = os.path.join(time_path,timelapse_folder)
+        os.makedirs(path_new, exist_ok = True)
+        
+        # Change working directory to save the image files in the following directory..
+        os.chdir(path_new)
+        
+        # added the the time delta to the before time to get the ending time
+        time_end = (datetime.strptime(current_time,"%Y%m%d%H%M%S") + tdelta)
+        print(time_end.strftime("%Y%m%d%H%M%S"))
+        # now before timelapse starts name it based on
+        print("starting timelapse")
+        start =  perf_counter()
+        count = 0
+        while datetime.now() < time_end:
+            time_current = datetime.now()
+            time_current_split = str(time_current.strftime("%Y%m%d_%H%M%S"))
+            camera.capture('Pi1_'+time_current_split+'.jpg', use_video_port=True)
+            #print('Captured %s' % filename)
+            count+=1
+        end=perf_counter() 
+           
+        print("count", count)
+        frame_rate = count/(end-start)
+        print("frame rate", frame_rate)
+        print("end", time_end)
+        break
  
     else:
         break
