@@ -56,6 +56,8 @@ this is likely due to the fact that the IP address you are trying to use was uti
 
     ` python3 Set_Control.py`
 
+* *Note that to update to pi, the .json file needs to be transferred to pi as detailed in next step*
+
 ## Step 6: Run Start-Up Bash Script
 * Now that the control.json file has been updated with the appropriate time and duration you can then ssh into the pi device from the terminal
 
