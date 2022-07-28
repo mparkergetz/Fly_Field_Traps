@@ -118,3 +118,4 @@ this is likely due to the fact that the IP address you are trying to use was uti
 
 
 * NEED TO HAVE OPENSSH INSTALLED ON LAPTOP FOR THIS TO WORK TO DO SCP ...
+* Alignment of the Box Traps should be such that the handles are not facing the inner or outer sides of the 80/20 tripod stand
