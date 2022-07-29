@@ -43,7 +43,9 @@ print("End Time:", end_time)
 
 # Frame Rate
 ## Add this in!
-frame_rate = 1 #fps
+print(" ")
+print("Set Frame Rate (fps)")
+frame_rate = float(input())#fps
 
 # control file parameters
 control ={
