@@ -172,7 +172,7 @@ while True:
             break
     
     # FIX FOR FRAMERATE ISSUE:
-    """
+    """(2592,1944)
     The below method will need to be implemented and tested
     This will serve to be the new method for how images will be saved and taken
     Need to additionally test to determine whether this is for a fact 
