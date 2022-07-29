@@ -177,20 +177,23 @@ while True:
     This will serve to be the new method for how images will be saved and taken
     Need to additionally test to determine whether this is for a fact 
     will not cause a loss of frames and will work for any frame rate.
-    
+
     """
     elif sys.argv[1] == "-q":
         run = True
         # path to save the images to the timelapse folder
         #path = "/home/pi/Field_Trap/Image_Acquisition/images/timelapse/"
-        camera.resolution = (1920,1080)
+        #camera.resolution = (1920,1080) # works for .5fps...
+        camera.resolution = (2592, 1944)
         # set the frame rate (SET IN JSON)
         camera.framerate = .5
         # set the duration 
-        time_hr = 1
+        time_hr = duration[0]
+        time_min = duration[1]
+        time_sec = duration[2]
         #print("2")
         # developed the change in time:
-        tdelta = timedelta(hours = 1)
+        tdelta = timedelta(seconds = time_sec, minutes = time_min, hours = time_hr)
         # set the start time
         current_time = datetime.now().strftime("%Y%m%d%H%M%S")
         # If the time is greater than or equal to the start time then it will start...
