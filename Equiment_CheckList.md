@@ -19,6 +19,8 @@
 
 ### Additional:
 * Monitor
+* mouse
+* 
 * HDMI Cable
 * (x2) Monitor Batteries
 * Measuring Tape
