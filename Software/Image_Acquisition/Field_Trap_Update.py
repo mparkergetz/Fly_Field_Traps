@@ -159,51 +159,51 @@ while True:
         print("Frame Rate:", frmerte)
         break
 
-elif sys.argv[1] == "-n":
-        run = True
-        # path to save the images to the timelapse folder
-        #path = "/home/pi/Field_Trap/Image_Acquisition/images/timelapse/"
-        camera.resolution = (2592, 1944)
-        # set the frame rate (SET IN JSON)
-        camera.framerate = frame_rate
-        # set the duration (SET IN JSON)
-        time_hr = duration[0]
-        time_min = duration[1]
-        time_sec = duration[2]
-        #print("2")
-        # developed the change in time:
-        tdelta = timedelta(seconds = time_sec, minutes = time_min, hours = time_hr)
-        # set the start time
-        current_time = datetime.now().strftime("%Y%m%d%H%M%S")
-        print("Timelapse running")
-        #start_time_new = datetime.strptime(start_time,"%Y%m%d%H%M%S")
-        # set the folder for the timelapse
-        timelapse_folder = "Pi1_"+str(start_time)
-        path_new = os.path.join(time_path,timelapse_folder)
-        os.makedirs(path_new, exist_ok = True)
-        
-        # Change working directory to save image files:
-        os.chdir(path_new)
+    elif sys.argv[1] == "-n":
+            run = True
+            # path to save the images to the timelapse folder
+            #path = "/home/pi/Field_Trap/Image_Acquisition/images/timelapse/"
+            camera.resolution = (2592, 1944)
+            # set the frame rate (SET IN JSON)
+            camera.framerate = frame_rate
+            # set the duration (SET IN JSON)
+            time_hr = duration[0]
+            time_min = duration[1]
+            time_sec = duration[2]
+            #print("2")
+            # developed the change in time:
+            tdelta = timedelta(seconds = time_sec, minutes = time_min, hours = time_hr)
+            # set the start time
+            current_time = datetime.now().strftime("%Y%m%d%H%M%S")
+            print("Timelapse running")
+            current_time_new = datetime.strptime(current_time,"%Y%m%d%H%M%S")
+            # set the folder for the timelapse
+            timelapse_folder = "Pi1_"+str(current_time)
+            path_new = os.path.join(time_path,timelapse_folder)
+            os.makedirs(path_new, exist_ok = True)
+            
+            # Change working directory to save image files:
+            os.chdir(path_new)
 
-        # added the the time delta to the before time to get the ending time
-        time_end = (current_time + tdelta)
-        print("End time: ", time_end.strftime("%Y%m%d%H%M%S"))
+            # added the the time delta to the before time to get the ending time
+            time_end = (current_time_new + tdelta)
+            print("End time: ", time_end.strftime("%Y%m%d%H%M%S"))
 
-        count = 0
-        #if start_time_new > datetime.now():
-        #    sleep((start_time_new - datetime.now()).total_seconds())
-        start = perf_counter()
+            count = 0
+            #if start_time_new > datetime.now():
+            #    sleep((start_time_new - datetime.now()).total_seconds())
+            start = perf_counter()
 
-        while datetime.now() < time_end:
-            time_current = datetime.now()
-            time_current_split = str(time_current.strftime("%Y%m%d_%H%M%S"))
-            camera.capture('Pi1_'+time_current_split+'.jpg', use_video_port=True)
-            count+=1
-            print("Image acquired: ", time_current_split)
-        end=perf_counter()
-        frmerte = count/(end-start)
-        print("Frame Rate:", frmerte)
-        break
+            while datetime.now() < time_end:
+                time_current = datetime.now()
+                time_current_split = str(time_current.strftime("%Y%m%d_%H%M%S"))
+                camera.capture('Pi1_'+time_current_split+'.jpg', use_video_port=True)
+                count+=1
+                print("Image acquired: ", time_current_split)
+            end=perf_counter()
+            frmerte = count/(end-start)
+            print("Frame Rate:", frmerte)
+            break
 
     else:
         break
